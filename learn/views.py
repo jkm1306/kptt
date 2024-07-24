@@ -304,6 +304,8 @@ def chapter_quiz_overview(
     responses = ChapterStudentResponse.objects.filter(quiz=quiz, student=student)
     quizzes = ChapterQuiz.objects.filter(chapter=chapter)
 
+    time_min = round(quiz.duration / 60)
+
     quiz_submitted = ChapterStudentResponse.objects.filter(
         student=student, quiz=quiz
     ).exists()
@@ -349,6 +351,7 @@ def chapter_quiz_overview(
         "number_incorrect": number_incorrect,
         "percentage": percentage,
         "quiz_submitted": quiz_submitted,
+        "time_min": time_min,
     }
     return render(request, "student/chapter/quizzes/dashboard.html", context)
 
@@ -469,21 +472,6 @@ def chapter_quiz_submit(
         redirect_url = f"{reverse('chapter_quiz_results', args=[student_slug, subject_slug, topic_slug, chapter_slug, quiz_slug])}?{urlencode(query_params)}"
         return redirect(redirect_url)
 
-        # Redirect to the quiz results page with the calculated score and unanswered questions
-        return redirect(
-            "chapter_quiz_results",
-            student_slug,
-            subject_slug,
-            topic_slug,
-            chapter_slug,
-            quiz_slug,
-            score=score,
-            total_questions=total_questions,
-            unanswered_questions=[q.id for q in unanswered_questions],
-            percentage_score=percentage_score,
-        )
-
-    # If the request is not POST, render the quiz template
     context = {
         "student": student,
         "subject": subject,
@@ -525,16 +513,26 @@ def chapter_quiz_results(
         else:
             incorrect_choices += 1
             incorrect_questions.append(question)
+    
+    number_unanswered_questions = len(questions) - len(responses)
+
+
+    unanswered_questions = []
+    answered_question_ids = [response.question.id for response in responses]
+    for question in questions.exclude(id__in=answered_question_ids):
+        choices = list(question.choices.values('id', 'choice_text', 'is_correct', 'explanation'))
+        unanswered_questions.append({
+            'question_text': question.question_text,
+            'choices': choices
+        })
+
+
 
     if len(questions) == 0:
         percentage = 0
     else:
         percentage = round((correct_choices / len(questions)) * 100)
 
-    if len(questions) == 0:
-        x_percentage = 0
-    else:
-        x_percentage = round((correct_choices / len(questions)) * 100)
 
     number_correct = len(correct_questions)
     number_incorrect = len(incorrect_questions)
@@ -576,7 +574,8 @@ def chapter_quiz_results(
         "number_correct": number_correct,
         "number_incorrect": number_incorrect,
         "quizzes": quizzes,
-        "x_percentage": x_percentage,
+        "unanswered_questions": unanswered_questions,
+        "number_unanswered": number_unanswered_questions,
     }
     return render(request, "student/chapter/quizzes/results.html", context)
 

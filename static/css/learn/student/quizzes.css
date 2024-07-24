@@ -13,6 +13,14 @@
     font-family: 'Manrope', sans-serif;
 }
 
+.quiz-overview .statistics dd {
+    font-family: 'Clash Grotesk', sans-serif;
+}
+
+.quiz-overview .statistics dt {
+    font-family: 'Clash Grotesk', sans-serif;
+}
+
 
 /* CHAPTER RESULTS */
 .results-page-hero .comment {

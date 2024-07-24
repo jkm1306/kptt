@@ -17,27 +17,23 @@
         <div class="w-[100%]">
           <p class="text-[1rem] w-[90%] mx-auto text-center mb-3 text-gray-500">
             {% if quiz_submitted == True %}
-              These are the results from your last attempt
+              This is what you need to know about the quiz from your last attempt
             {% else %}
               This is all you need to know abot the quiz, let's get started!
             {% endif %}
           </p>
           <div>
-            <div class="relative">
-              <div class="absolute inset-0 h-1/2"></div>
+            <div class="relative statistics">
+              <div class="inset-0 h-1/2"></div>
               <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-4xl mx-auto">
                   <dl class="rounded-lg sm:grid sm:grid-cols-3">
                     <div class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
-                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Questions</dt>
-                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ quiz.questions.count }}</dd>
-                    </div>
-                    <div class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
                       <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
                         {% if quiz_submitted == True %}
                           Percent
                         {% else %}
-                          Mark/ Question
+                          Mark PQ
                         {% endif %}
                       </dt>
                       <dd class="order-1 text-5xl font-extrabold text-gray-500">
@@ -48,9 +44,41 @@
                         {% endif %}
                       </dd>
                     </div>
+                    <div class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
+                        {% if quiz_submitted == True %}
+                          {% if questions.count <= 1 %}
+                          Question
+                          {% else %}
+                          Questions
+                          {% endif %}
+                        {% else %}
+                          Mark PQ
+                        {% endif %}
+                      </dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">
+                        {% if quiz_submitted == True %}
+                          {{ questions.count }}
+                        {% else %}
+                          1
+                        {% endif %}
+                      </dd>
+                    </div>
                     <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
-                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Incorrect</dt>
-                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ percentage }}</dd>
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
+                        {% if quiz_submitted == True %}
+                          Minutes
+                        {% else %}
+                          Mark PQ
+                        {% endif %}
+                      </dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">
+                        {% if quiz_submitted == True %}
+                          {{ time_min }}
+                        {% else %}
+                          1
+                        {% endif %}
+                      </dd>
                     </div>
                   </dl>
                 </div>
@@ -66,5 +94,4 @@
       </div>
     </div>
   </section>
-
 {% endblock %}
