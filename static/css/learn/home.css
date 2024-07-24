@@ -1,0 +1,39 @@
+.learn-hero p {
+    font-family: 'Manrope', sans-serif;
+}
+
+.learn-hero h3 {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.learn-hero a {
+    font-family: 'Clash Grotesk', sans-serif;
+    letter-spacing: 1px;
+}
+
+.learn-features h5 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.learn-features h6 {
+    font-family: 'Manrope', sans-serif;
+}
+
+.learn-features p {
+    font-family: 'Manrope', sans-serif;
+}
+
+.learn-offer h4 {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.learn-offer p {
+    font-family: 'Manrope', sans-serif;
+    word-spacing: 1px;
+}
+
+.learn-offer a {
+    font-family: 'Clash Grotesk', sans-serif;
+}
+

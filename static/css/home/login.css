@@ -1,0 +1,93 @@
+body {
+    overflow-x: hidden;
+}
+
+
+
+.error-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: red;
+    font-family: 'Switzer', sans-serif;
+    font-weight: 300;
+    margin-top: 15%;
+    position: absolute;
+    z-index: 9999999;
+}
+
+h4 {
+    font-family: 'General Sans', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
+p {
+    font-family: 'Switzer', sans-serif;
+    font-size: 1rem;
+}
+
+#into-p {
+    text-align: center;
+    width: 100%;
+}
+
+.w-full input {
+    font-family: 'Switzer', sans-serif;
+    font-weight: 300;
+}
+
+.signup-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: #0071b8;
+    color: white;
+    font-family: 'Switzer', sans-serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    padding: 10px;
+    transition: 0.3s;
+    margin-left: auto;
+    margin-right: 100%;
+}
+
+.signup-btn:hover {
+    transition: 0.3s;
+}
+
+.signup-btn svg {
+    margin-left: 15%;
+}
+
+.signup-btn:hover svg {
+    animation: Slide 1s infinite;
+}
+
+
+@keyframes Slide {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(15px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    #signup-form-section {
+        margin-top: 15%;
+    }
+
+    .signup-btn svg {
+        animation: Slide 1s infinite;
+    }
+}

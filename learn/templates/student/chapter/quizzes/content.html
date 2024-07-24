@@ -1,0 +1,12 @@
+{% extends 'student/base_student.html' %}
+
+{% load static %}
+
+{% block title %}
+  {{ quiz.title }} | {{ chapter.name }}
+{% endblock %}
+
+{% block content %}
+  <br /><br /><br /><br /><br />
+  {% include 'student/chapter/quizzes/questions.html' %}
+{% endblock %}

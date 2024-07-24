@@ -1,0 +1,290 @@
+{% extends 'student/base_student.html' %}
+
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+  {{ quiz.title }} | {{ chapter.name }}
+{% endblock %}
+
+{% block content %}
+  <section class="w-[90%] mx-auto mt-[5rem] results-page-hero">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 p-10">
+      <div class="col-span-1 bg-white rounded-xl">
+        <div class="progress">
+          <svg class="progress-bar mx-auto" width="150" height="150" viewBox="-10 -10 310 320">
+            <circle class="progress-circle" cx="150" cy="150" r="135"></circle>
+            <circle class="progress-circle" stroke="{{ color }}" cx="150" cy="150" r="135" style="stroke-dashoffset: calc(848 - (848 * {{ percentage }}) / 100);"></circle>
+          </svg>
+          <div class="text text-[2rem] font-semibold text-[{{ color }}]">{{ percentage }}%</div>
+        </div>
+
+        <div class="text-gray-600 w-[100%] text-center mt-5 comment">
+          {% if percentage == 100 %}
+            <span>Bravo {{ student.first_name }}, simply spectacular!</span>
+          {% elif percentage >= 95 %}
+            <span>Awesome {{ student.first_name }}, nearly a perfect score! Keep it up</span>
+          {% elif percentage >= 80 %}
+            <span>Great work {{ student.first_name }}, you really have the brains</span>
+          {% elif percentage >= 75 %}
+            <span>Congratulations {{ student.first_name }}, you passed. Let's keep improving</span>
+          {% elif percentage >= 60 %}
+            <span>{{ student.first_name }} you were so close, why not try again?</span>
+          {% elif percentage >= 50 %}
+            <span>Great effort {{ student.first_name }}, I know you can do better. Let's review the quiz together</span>
+          {% elif percentage >= 30 %}
+            <span>Hey {{ student.first_name }}, don't be discouraged. Let's work on improving together! Let's start by going through the quiz</span>
+          {% else %}
+            <span>{{ student.first_name }}, it happens to all of us, let's learn, work and improve. Let's start by going through the quiz together</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-span-2 quiz-info">
+        <div class="w-[90%] mx-auto text-center">
+          <h6 class="text-gray-700 text-[2rem]">{{ quiz.title }}</h6>
+          <span class="text-gray-400 text-[1rem]">{{ chapter.name }}</span>
+        </div>
+        <div>
+          <div class="mt-5 pb-1">
+            <div class="relative">
+              <div class="absolute inset-0 h-1/2"></div>
+              <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto">
+                  <dl class="rounded-lg sm:grid sm:grid-cols-3">
+                    <div class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Questions</dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ questions.count }}</dd>
+                    </div>
+                    <div class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Correct</dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ correct_choices }}</dd>
+                    </div>
+                    <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Incorrect</dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ incorrect_choices }}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1"></div>
+    </div>
+  </section>
+
+  <section class="w-[90%] mx-auto results-tab min-h-[80vh]">
+    <div class="mb-4 border-b border-gray-200">
+      <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-[{{ student.color }}] hover:text-[{{ student.color }}] border-[{{ student.color }}]" data-tabs-inactive-classes="text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300" role="tablist">
+        <li class="me-2 tab-links" role="presentation">
+          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="correct-styled-tab" data-tabs-target="#styled-correct" type="button" role="tab" aria-controls="correct" aria-selected="false">Correct</button>
+        </li>
+        <li class="me-2 tab-links" role="presentation">
+          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="incorrect-styled-tab" data-tabs-target="#styled-incorrect" type="button" role="tab" aria-controls="incorrect" aria-selected="false">Incorrect</button>
+        </li>
+        <li class="tab-links" role="presentation">
+          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="other_quizzes-styled-tab" data-tabs-target="#styled-other_quizzes" type="button" role="tab" aria-controls="other_quizzes" aria-selected="false">Other Quizzes</button>
+        </li>
+      </ul>
+    </div>
+    <div id="default-styled-tab-content">
+      <!-- Correct -->
+      <div class="hidden" id="styled-correct" role="tabpanel" aria-labelledby="correct-tab">
+        <div class="w-[90%] mx-auto text-center comment text-[1rem] text-gray-500 mb-[2rem]">
+          {% if number_correct == 0 %}
+            <p class="text-[1rem] text-gray-600">Hey {{ student.first_name }}, don't give up. Let's go through the questions, learn from them and you'll surely improve</p>
+          {% elif number_correct == 1 %}
+            <p class="text-[1rem] text-gray-600">Looks like you got one right there, congrats. Let's start by going through it</p>
+          {% endif %}
+        </div>
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {% for question in correct_questions %}
+            <div class="question bg-gray-200 p-10 rounded-xl border-gray-300 border-2">
+              <h6 class="w-[95%] mx-auto mb-3 font-semibold text-gray-600 text-[1.1rem]">{{ question.question_text }}</h6>
+              <ul>
+                {% for choice in question.choices.all %}
+                  <li class="{% if choice == selected_choices|get_item:question %} bg-green-300 border-green-500 border-2 {% endif %} grid grid-cols-11 my-2 py-2 pl-4 text-[0.9rem] rounded-xl">
+                    <div class="col-span-10">{{ choice.choice_text }}</div>
+                    <div class="col-span-1 mx-auto flex justify-center items-center w-[100%]">
+                      <!-- Align -->
+                      <div class="flex items-center justify-center">
+                        <div x-data="{ open: false }">
+                          <button @click="open = true" class="text-white rounded">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
+                              <path d="M11.967 12.75C12.967 11.75 13.967 11.3546 13.967 10.25C13.967 9.14543 13.0716 8.25 11.967 8.25C11.0351 8.25 10.252 8.88739 10.03 9.75M11.967 15.75H11.977M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="{% if choice == selected_choices|get_item:question %}#00a639{% else %} #a4a4a4{% endif %}" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                          </button>
+                          <div
+                            @keydown.escape.window="open = false"
+                            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                            x-show="open"
+                            x-cloak
+                            style="display: none"
+                          >
+                            <!-- Modal -->
+                            <div class="flex items-center justify-center min-h-screen">
+                              <div
+                                class="bg-white p-6 rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
+                                @click.away="open = false"
+                                x-transition:enter="ease-out duration-100"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="ease-in duration-200"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0"
+                              >
+                                <!-- Modal header -->
+                                <div class="flex items-start justify-between">
+                                  <div class="text-left">
+                                    <h6 class="text-lg leading-6 font-medium text-gray-900 mb-5">
+                                      {% if choice.is_correct %}Why is it Correct?{% else %}Why is this Wrong?{% endif %}
+                                    </h6>
+                                  </div>
+                                  <span class="cursor-pointer" @click="open = false">✕</span>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="text-left my-2">
+                                  <p class="text-sm text-black">{{ choice.explanation }}</p>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="flex items-center justify-end gap-2 mt-4">
+                                  <button
+                                    type="button"
+                                    class="w-full inline-flex justify-center rounded-md border {% if choice.is_correct %}border-[#114e26] text-[#0e9019] hover:bg-[#278c4a] focus:ring-[#186232]{% else %}border-[#d53535] text-[#c12727] hover:bg-[#d53535] focus:ring-[#491313]{% endif %} px-4 py-2 text-base font-medium hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:text-sm"
+                                    @click="open = false"
+                                  >
+                                    Close
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Incorrect -->
+      <div class="hidden" id="styled-incorrect" role="tabpanel" aria-labelledby="incorrect-tab">
+        <div class="w-[90%] mx-auto text-center mb-5 comment">
+          {% if number_incorrect == 0 %}
+            <p class="text-[1rem] text-gray-600 mt-[4rem]">Nothing to see here {{ student.first_name }}, you got them all. Well done once again!</p>
+          {% elif number_incorrect == 1 %}
+            <p class="text-[1rem] text-gray-600">Nearly a perfect score for {{ student.first_name }}, let's see what went wrong so that the next quiz is a whole 100!</p>
+          {% elif number_correct == 0 %}
+            <p class="text-[1rem] text-gray-600">
+              We all fall sometimes. The important part? We get back up. <br />What do you say we get you back up together?!
+            </p>
+          {% endif %}
+        </div>
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {% for question in incorrect_questions %}
+            <div class="question bg-gray-200 p-10 rounded-xl border-gray-300 border-2">
+              <h6 class="w-[95%] mx-auto mb-3 font-semibold text-gray-600 text-[1.1rem]">{{ question.question_text }}</h6>
+              <ul>
+                {% for choice in question.choices.all %}
+                  <li class="{% if choice == selected_choices|get_item:question %} bg-red-300 border-red-500 border-2 {% endif %} {% if choice.is_correct == True %} bg-green-300 border-green-500 border-2 {% endif %}  grid grid-cols-11 my-2 py-2 pl-4 text-[0.9rem] rounded-xl">
+                    <div class="col-span-10">{{ choice.choice_text }}</div>
+                    <div class="col-span-1 mx-auto flex justify-center items-center w-[100%]">
+                      <!-- Align -->
+                      <div class="flex items-center justify-center">
+                        <div x-data="{ open: false }">
+                          <button @click="open = true" class="text-white rounded">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
+                              <path d="M11.967 12.75C12.967 11.75 13.967 11.3546 13.967 10.25C13.967 9.14543 13.0716 8.25 11.967 8.25C11.0351 8.25 10.252 8.88739 10.03 9.75M11.967 15.75H11.977M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="{% if choice == selected_choices|get_item:question %} #E6004A {% elif choice.is_correct == True %} #00a639 {% else %} #a4a4a4 {% endif %}" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                          </button>
+                          <div
+                            @keydown.escape.window="open = false"
+                            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                            x-show="open"
+                            x-cloak
+                            style="display: none"
+                          >
+                            <!-- Modal -->
+                            <div class="flex items-center justify-center min-h-screen">
+                              <div
+                                class="bg-white p-6 rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
+                                @click.away="open = false"
+                                x-transition:enter="ease-out duration-100"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="ease-in duration-200"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0"
+                              >
+                                <!-- Modal header -->
+                                <div class="flex items-start justify-between">
+                                  <div class="text-left">
+                                    <h6 class="text-lg leading-6 font-medium text-gray-900 mb-5">
+                                      {% if choice.is_correct %}Why is it Correct?{% else %}Why is this Wrong?{% endif %}
+                                    </h6>
+                                  </div>
+                                  <span class="cursor-pointer" @click="open = false">✕</span>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="text-left my-2">
+                                  <p class="text-sm text-black">{{ choice.explanation }}</p>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="flex items-center justify-end gap-2 mt-4">
+                                  <button
+                                    type="button"
+                                    class="w-full inline-flex justify-center rounded-md border {% if choice.is_correct %}border-[#114e26] text-[#0e9019] hover:bg-[#278c4a] focus:ring-[#186232]{% else %}border-[#d53535] text-[#c12727] hover:bg-[#d53535] focus:ring-[#491313]{% endif %} px-4 py-2 text-base font-medium hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:text-sm"
+                                    @click="open = false"
+                                  >
+                                    Close
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Other Quizzes -->
+      <div class="hidden p-4 rounded-lg other-quizzes" id="styled-other_quizzes" role="tabpanel" aria-labelledby="other_quizzes-tab">
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-3 gap-4">
+          {% for x in quizzes %}
+          <div class="p-4 bg-white border-[2px] border-gray-200 rounded-xl {% if x == quiz %}hidden{% endif %} ">
+            <h6 class="w-[90%] text-center text-[1.3rem] text-gray-500 mb-3">{{ x.title }}</h6>
+            <div class="grid grid-cols-8 px-3 text-[0.9rem]">
+              <div class="col-span-3 w-[95%] text-center">
+                <p class="text-gray-500 font-semibold">
+                  {{ x.questions.count }}
+                  <br>
+                  <span class="text-gray-400 text-[0.75rem]">
+                    Questions
+                  </span>
+                </p>
+              </div>
+              <div class="flex items-center justify-center col-span-1 col-start-7 w-[100%]">
+                <a href="{% url 'chapter_quiz_overview' student.student_slug subject.subject_slug topic.topic_slug chapter.chapter_slug quiz.quiz_slug %}" class="text-center text-[0.9rem] px-4 py-1 text-[{{ student.color }}] border-[2px] border-[{{ student.color }}] duration-500 hover:bg-[{{ student.color }}] hover:text-white bg-white rounded">Start</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

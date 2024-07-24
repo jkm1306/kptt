@@ -1,0 +1,67 @@
+.main-user-dashboard h5 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.main-user-dashboard h6 {
+    font-family: 'Clash Grotesk', sans-serif;
+    font-weight: 500;
+    word-spacing: 1px;
+}
+
+.main-body-dashboard-section .intro p {
+    font-family: 'Manrope', sans-serif;
+    word-spacing: 1px;
+}
+
+.main-body-dashboard-section .add-students p {
+    font-family: 'Manrope', sans-serif;
+    word-spacing: 1px;
+}
+
+.main-body-dashboard-section .student-list h5 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.main-body-dashboard-section .student-list p {
+    font-family: 'Manrope', sans-serif;
+    word-spacing: 1px;
+}
+
+.main-body-dashboard-section .student-list a {
+    font-family: 'Clash Grotesk', sans-serif;
+    font-weight: 500;
+    word-spacing: 1px;
+}
+
+
+.main-body-dashboard-section .date-n-time {
+    font-family: 'Clash Grotesk', sans-serif;
+}
+
+
+
+.calendar {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.calendar table {
+    border-collapse: collapse;
+}
+
+.calendar th,
+.calendar td {
+    padding: 5px;
+    text-align: center;
+}
+
+.calendar th {
+    background-color: #f2f2f2;
+}
+
+.calendar td.current-day {
+    background-color: #e6e6e6;
+}

@@ -1,0 +1,115 @@
+.student-dashboard-hero h6 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.student-dashboard-hero p {
+    font-family: 'Manrope', sans-serif;
+}
+
+.student-dashboard-body p {
+    font-family: 'Manrope', sans-serif;
+}
+
+.student-dashboard-body .card-body-grid h6 {
+    font-family: 'Clash Grotesk', sans-serif;
+}
+
+
+
+
+.breadcrumb-nav {
+    font-family: 'Manrope', sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+.subject-dashboard-hero h6 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.subject-dashboard-hero p {
+    font-family: 'Manrope', sans-serif;
+}
+
+
+
+
+
+
+.subject-report-details p {
+    font-family: 'Manrope', sans-serif;
+}
+
+
+
+
+
+.card-body-grid h6 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+
+.card-body-grid span {
+    font-family: 'Manrope', sans-serif;
+}
+
+.card-body-grid text {
+    font-family: 'Manrope', sans-serif;
+}
+
+/* PROGRESS SVG */
+.progress {
+    position: relative;
+}
+
+.progress-circle {
+    fill: none;
+}
+
+.progress-bar {
+    transform: rotate(-90deg);
+}
+
+.progress-circle:nth-child(1) {
+    stroke: rgb(238, 238, 238);
+    stroke-width: 30px;
+}
+
+.progress-circle:nth-child(2) {
+    stroke-dasharray: 848;
+    stroke-linecap: round;
+    stroke-width: 36px;
+    animation: progress 2.5s ease-in-out;
+}
+
+@keyframes progress {
+    from {
+        stroke-dashoffset: 848;
+    }
+}
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Manrope', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+

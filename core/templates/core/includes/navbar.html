@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/include/navbar.css' %}" />
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  </head>
+
+  <body class="font-[Poppins] h-screen">
+    <header class="fixed top-0 left-0 right-0" id="header-container">
+      <nav class="flex justify-between items-center w-[92%] mx-auto" id="navbar-container">
+        <div>
+          <a href="{% url 'index' %}"><img class="h-11 cursor-pointer" src="{% static 'img/logos/logo-blue.png' %}" alt="Kopala Tutor" /></a>
+        </div>
+        <div id="navitem" class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto w-full flex items-center px-5 z-9999999">
+          <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8" id="navlinks">
+            <li>
+              <a class="hover:text-gray-500" href="#">About</a>
+            </li>
+            <li>
+              <a class="hover:text-gray-500" href="#">Solutions</a>
+            </li>
+            <li>
+              <a class="hover:text-gray-500" href="#">Resource</a>
+            </li>
+            <li>
+              <a class="hover:text-gray-500" href="#">Contact</a>
+            </li>
+            {% if request.user.is_authenticated %}
+          </ul>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="{% url "logout" %}"><button class="bg-[#0071b8] text-white px-5 py-2 rounded-full hover:bg-[#059af0]">Log Out</button></a>
+            <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+          {% else %}
+          <li>
+            <a class="hover:text-gray-500" href="{% url "signup" %}">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+      <div class="flex items-center gap-6">
+          <a href="{% url "login" %}"><button class="bg-[#0071b8] text-white px-5 py-2 rounded-full hover:bg-[#059af0]">Sign In</button></a>
+          <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+
+    <script>
+      const navLinks = document.querySelector('.nav-links')
+      function onToggleMenu(e) {
+        e.name = e.name === 'menu' ? 'close' : 'menu'
+        navLinks.classList.toggle('top-[9%]')
+      }
+    </script>
+  </body>
+</html>

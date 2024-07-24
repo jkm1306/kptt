@@ -1,0 +1,42 @@
+{% extends 'student/base_student.html' %}
+
+{% load static %}
+
+{% block title %}
+  {{ single_chapter.name }}
+{% endblock %}
+
+{% block content %}
+  <br /><br /><br /><br /><br />
+
+  <section class="w-[80%] mx-auto mt-[2rem]">
+    <h2 class="text-[2.4rem] text-bold w-[80%] mx-auto text-center mb-[4rem]">Chapter Dasboard</h2>
+    <p>
+      Bread Crumbs: /
+      <a href="{% url 'topic_dashboard' student.student_slug single_subject.subject_slug topic.topic_slug %}">{{ topic.name }}</a>
+      /
+      <a href="{% url 'chapter_dashboard' student.student_slug single_subject.subject_slug topic.topic_slug single_chapter.chapter_slug %}">{{ single_chapter.name }}</a>
+    </p>
+    <br /><br />
+
+    <form method="post">
+      {% csrf_token %}
+      {{ chapter_completion_form.as_p }}
+      <button type="submit">Confirm</button>
+    </form>
+
+    {% comment %}NEXT AND PREVIOUS CHAPTER BUTTON{% endcomment %}
+    <div class="w-[80%] mx-auto bg-blue-900 text-white grid grid-cols-2">
+      <div>
+        {% if prev_chapter %}
+          <a href="{% url 'chapter_dashboard' student.student_slug subject_slug topic.topic_slug prev_chapter.chapter_slug %}">Previous: {{ prev_chapter.name }}</a>
+        {% endif %}
+      </div>
+      <div>
+        {% if next_chapter %}
+          <a href="{% url 'chapter_dashboard' student.student_slug subject_slug topic.topic_slug next_chapter.chapter_slug %}">Next: {{ next_chapter.name }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

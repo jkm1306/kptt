@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <h1>{{ quiz.title }}</h1>
+
+    <p>
+      Time remaining: <span id="timer"></span>
+    </p>
+
+    <section>
+      <form method="post" id="quiz-form" action="{% url 'chapter_quiz_submit' student.student_slug subject.subject_slug topic.topic_slug chapter.chapter_slug quiz.quiz_slug %}" class="bg-gray-200 grid grid-cols-1 gap-6 sm:grid-cols-2 p-10">
+        {% csrf_token %}
+        {% for question in questions %}
+          <div>
+            <h3>{{ question.question_text }}</h3>
+            {% for choice in question.choices.all %}
+              <div>
+                <input type="radio" name="{{ question.id }}" value="{{ choice.id }}" />
+                <label>{{ choice.choice_text }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+        <button type="submit">Submit Quiz</button>
+      </form>
+    </section>
+
+    <script>
+      // Set the duration of the timer in seconds
+      const timerDuration = 5 // 5 minutes
+      
+      // Get the timer element from the DOM
+      const timerElement = document.getElementById('timer')
+      
+      // Get the form element from the DOM
+      const quizForm = document.getElementById('quiz-form')
+      
+      // Function to update the timer display
+      function updateTimerDisplay(remainingSeconds) {
+        const minutes = Math.floor(remainingSeconds / 60)
+        const seconds = remainingSeconds % 60
+        timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`
+      }
+      
+      // Function to handle the timer countdown
+      function startTimer() {
+        let remainingSeconds = timerDuration
+      
+        // Update the timer display initially
+        updateTimerDisplay(remainingSeconds)
+      
+        // Set an interval to update the timer every second
+        const timerInterval = setInterval(() => {
+          remainingSeconds--
+      
+          // Update the timer display
+          updateTimerDisplay(remainingSeconds)
+      
+          // If the timer reaches zero, submit the form and redirect
+          if (remainingSeconds === 0) {
+            clearInterval(timerInterval) // Stop the interval
+            quizForm.submit() // Submit the form
+          }
+        }, 1000) // Update every 1 second (1000 milliseconds)
+      }
+      
+      // Start the timer when the page loads
+      window.onload = startTimer
+    </script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+{% extends 'base_learn.html' %}
+
+{% load static %}
+
+{% block content %}
+  <div class="relative h-[40vh] w-[96%] mx-auto mt-[5rem] main-user-dashboard">
+    <div class="bg-gradient-to-tr from-sky-400 to-cyan-700 h-[100%] w-[100%] rounded-xl">
+      <img class="h-[100%] w-[100%] rounded-xl object-cover object-center absolute brightness-90" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+      <div class="absolute w-[50%] h-[100%] pl-[2rem] bg-gradient-to-r from-[#0069b4] to-transparent rounded-xl flex flex-col justify-center">
+        <h5 class="font-semibold text-white text-5xl">Dashboard</h5>
+        <h6 class="text-[#d8d8d8] mt-[1rem] text-xl pl-[0.5rem]">Hello {{ user.first_name }}</h6>
+      </div>
+    </div>
+  </div>
+
+  {% if number_of_students <= 0 %}
+    <section class="mt-[2rem] w-[90%] mx-auto main-body-dashboard-section">
+      <div class="text-center intro">
+        <p class="text-[1rem] text-gray-600">Hey {{ user.first_name }}, great to have you. Let's not waste much time and get straight to what you came here for, Learning! Watch the video below to learn how to get the most out of Kopala Tutor. Or you could go right ahead and add a student and start learning.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-[1rem] mt-[2rem]">
+        <div class="col-span-1" class="rounded-xl">
+          <video id="video-id" class="rounded-xlw-full h-auto aspect-video" poster="{% static 'img/logos/blue-learn.svg' %}" controls autoplay="false">
+            <source src="{% static 'test.mp4' %}" type="video/mp4" class="rounded-xl" />
+          </video>
+        </div>
+
+        <div class="col-span-1 adding-student-div flex justify-center rounded-xl border border-[#0a70b0] border-xl">
+          <div class="content-center add-students">
+            <a href="{% url 'manage_grades' %}">
+              <svg width="95px" height="95px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#298edb" stroke-width="1.6799999999999997" stroke-linecap="round"></path> <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#298edb" stroke-width="1.6799999999999997" stroke-linecap="round"></path>
+                </g>
+              </svg>
+            </a>
+            <br />
+            <a href="{% url 'manage_grades' %}"><p class="bg-sky-600 text-wrap text-center text-white p-[0.5rem] rounded-xl hover:bg-sky-700 duration-200">Add Students</p></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <section class="mt-[2rem] w-[90%] mx-auto main-body-dashboard-section">
+      <div class="text-center intro">
+        {% if number_of_students == 1 %}
+          <p class="text-[1rem] text-gray-600">Are you ready to learn?</p>
+        {% elif number_of_students == 2 %}
+          <p class="text-[1rem] text-gray-600">Who between you is ready to learn?</p>
+        {% elif number_of_students > 2 %}
+          <p class="text-[1rem] text-gray-600">Who among you is ready to learn?</p>
+        {% endif %}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-6 gap-3 mt-[2rem] student-list">
+        <div class="flex border border-gray-500 rounded-lg p-4 bg-white col-span-6 sm:col-span-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-[100%]">
+            {% for student in student %}
+              <div class="h-[12rem] w-[100%] border-2 border-[{{ student.color }}] rounded-[1.5em] bg-gradient-to-br from-[{{ student.color }}] to-white text-white font-nunito p-[1em] flex justify-center items-left flex-col gap-[0.75em] backdrop-blur-[12px]">
+                <div>
+                  <h5 class="text-[2em] font-medium">{{ student.first_name }}</h5>
+                  <p class="text-[0.85em]">{{ student.grade }}</p>
+                </div>
+
+                <a href="{% url 'student_dashboard' student.student_slug %}" class="h-fit w-fit px-[1em] py-[0.25em] border-[1px] rounded-xl flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]">Let's Go!</a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="flex border border-gray-500 rounded-lg p-4 bg-white col-span-6 sm:col-span-2 date-n-time">
+          <div class="h-[100px] w-[100%] bg-sky-700 rounded-xl flex justify-center items-center">
+            <div class="text-center w-[50%] grid grid-rows-2 grid-cols-1">
+              <span id="date-container" class="text-3xl text-white font-semibold"></span>
+              <span id="month-container" class="text-2xl text-gray-200"></span>
+            </div>
+            <div class="text-center w-[50%]">
+              <span id="time-container" class="text-3xl text-white font-semibold"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <br /><br /><br /><br />
+  <a href="{% url 'manage_grades' %}">Manage Grades</a>
+  <br /><br />
+  {% for student in student %}
+    <a href="{% url 'student_dashboard' student.student_slug %}">{{ student.first_name }}</a>
+    <br />
+  {% endfor %}
+{% endblock %}

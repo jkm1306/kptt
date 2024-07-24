@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="bg-white">
+  <head>
+    {% block head %}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta charset="UTF-8" />
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="{% static 'css/learn/student/dashboard.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/learn/student/quizzes.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/learn/include/navbar.css' %}" />
+      <link rel="shortcut icon" href="{% static 'img/logos/blue-single.svg' %}" type="image/x-icon" />
+
+      <!-- FIRA SANS (HEADERS) font-family: 'Fira Sans', sans-serif; -->
+      <link href="https://api.fontshare.com/v2/css?f[]=fira-sans@1&display=swap" rel="stylesheet" />
+
+      <!-- CLASH GROTESK (LINKS) font-family: 'Clash Grotesk', sans-serif; -->
+      <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@1&display=swap" rel="stylesheet" />
+
+      <!-- MANROPE (BODY) font-family: 'Manrope', sans-serif; -->
+      <link href="https://api.fontshare.com/v2/css?f[]=manrope@1&display=swap" rel="stylesheet" />
+
+      {% comment %}NAVBAR{% endcomment %}
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+      {% comment %}INTRO VIDEO PLAYER{% endcomment %}
+      <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+
+      <script src="//unpkg.com/alpinejs" defer></script>
+
+      <title>
+        {% block title %}
+
+        {% endblock %}
+      </title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <section class="main-body-section">
+      {% include 'includes/navbar.html' %}
+      {% block content %}
+
+      {% endblock %}
+    </section>
+
+    {% include 'includes/footer.html' %}
+
+    <script src="{% static 'js/learn/include/navbar.js' %}"></script>
+
+    {% comment %}NAVBAR SCRIPT{% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
+    {% comment %}VIDEO PLAYER SCRIPT{% endcomment %}
+    <script>
+      var myFP = fluidPlayer('video-id', {
+        layoutControls: {
+          controlBar: {
+            autoHideTimeout: 3,
+            animated: true,
+            autoHide: true
+          },
+          htmlOnPauseBlock: {
+            html: null,
+            height: '',
+            width: null
+          },
+          autoPlay: true,
+          mute: true,
+          allowTheatre: false,
+          playPauseAnimation: true,
+          playbackRateEnabled: true,
+          allowDownload: false,
+          playButtonShowing: true,
+          fillToContainer: false,
+          posterImage: ''
+        },
+        vastOptions: {
+          adList: [],
+          adCTAText: false,
+          adCTATextPosition: ''
+        }
+      })
+    </script>
+
+  </body>
+</html>

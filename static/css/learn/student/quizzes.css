@@ -1,0 +1,76 @@
+/* QUIZ OVERVIEW */
+.quiz-overview h5 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.quiz-overview h6 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.quiz-overview p {
+    font-family: 'Manrope', sans-serif;
+}
+
+
+/* CHAPTER RESULTS */
+.results-page-hero .comment {
+    font-family: 'Manrope', sans-serif;
+}
+
+.results-page-hero .quiz-info h6 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.results-page-hero .quiz-info span {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 500;
+}
+
+.results-page-hero .quiz-info dt, dd {
+    font-family: 'Clash Grotesk', sans-serif;
+    font-weight: 500;
+}
+
+
+
+.results-tab .tab-links {
+    font-family: 'Clash Grotesk', sans-serif;
+    font-weight: 500;
+}
+
+.results-tab .comment {
+    font-family: 'Manrope', sans-serif;
+}
+
+.results-tab .question h6 {
+    font-family: 'Manrope', sans-serif;
+}
+
+.results-tab .question li {
+    font-family: 'Manrope', sans-serif;
+}
+
+
+
+/* MODAL */
+[x-cloak] {
+    display: none !important;
+}
+
+
+/* OTHER QUIZZES TAB */
+.results-tab .other-quizzes h6 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
+
+.results-tab .other-quizzes p {
+    font-family: 'Manrope', sans-serif;
+}
+
+.results-tab .other-quizzes a {
+    font-family: "Clash Grotesk", sans-serif;
+}

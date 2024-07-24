@@ -1,0 +1,164 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="bg-white">
+  <head>
+    {% block head %}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta charset="UTF-8" />
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="{% static 'css/learn/home.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/learn/main_user/dashboard.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/learn/student/dashboard.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/learn/include/navbar.css' %}" />
+      <link rel="shortcut icon" href="{% static 'img/logos/blue-single.svg' %}" type="image/x-icon" />
+
+      <!-- FIRA SANS (HEADERS) font-family: 'Fira Sans', sans-serif; -->
+      <link href="https://api.fontshare.com/v2/css?f[]=fira-sans@1&display=swap" rel="stylesheet" />
+
+      <!-- CLASH GROTESK (LINKS) font-family: 'Clash Grotesk', sans-serif; -->
+      <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@1&display=swap" rel="stylesheet" />
+
+      <!-- MANROPE (BODY) font-family: 'Manrope', sans-serif; -->
+      <link href="https://api.fontshare.com/v2/css?f[]=manrope@1&display=swap" rel="stylesheet" />
+
+      <!-- GRADE SELECTION -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      {% comment %}NAVBAR{% endcomment %}
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+      {% comment %}INTRO VIDEO PLAYER{% endcomment %}
+      <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+
+      <title>
+        {% block title %}
+          Home
+        {% endblock %}| Learn
+      </title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <section class="main-body-section">
+      {% include 'includes/navbar.html' %}
+      {% block content %}
+
+      {% endblock %}
+    </section>
+
+    {% include 'includes/footer.html' %}
+
+    <script src="{% static 'js/learn/include/navbar.js' %}"></script>
+
+    <!-- GRADE MANAGEMENT -->
+    <script>
+      $('#add-form').click(function () {
+        var formIndex = $('#id_form-TOTAL_FORMS').val()
+        var newForm = $('.form-instance:last').clone(true)
+        newForm.find(':input').each(function () {
+          var name = $(this)
+            .attr('name')
+            .replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-')
+          var id = 'id_' + name
+          $(this).attr({ name: name, id: id }).val('').removeAttr('checked')
+        })
+        newForm.find('label').each(function () {
+          var newFor = $(this)
+            .attr('for')
+            .replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-')
+          $(this).attr('for', newFor)
+        })
+        $('#form-list').append(newForm)
+        $('#id_form-TOTAL_FORMS').val(parseInt(formIndex) + 1)
+      })
+    </script>
+
+    {% comment %}NAVBAR SCRIPT{% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
+    {% comment %}VIDEO PLAYER SCRIPT{% endcomment %}
+    <script>
+      var myFP = fluidPlayer('video-id', {
+        layoutControls: {
+          controlBar: {
+            autoHideTimeout: 3,
+            animated: true,
+            autoHide: true
+          },
+          htmlOnPauseBlock: {
+            html: null,
+            height: '',
+            width: null
+          },
+          autoPlay: true,
+          mute: true,
+          allowTheatre: false,
+          playPauseAnimation: true,
+          playbackRateEnabled: true,
+          allowDownload: false,
+          playButtonShowing: true,
+          fillToContainer: false,
+          posterImage: ''
+        },
+        vastOptions: {
+          adList: [],
+          adCTAText: false,
+          adCTATextPosition: ''
+        }
+      })
+    </script>
+
+    {% comment %}CALENDAR SCRIPT{% endcomment %}
+    <script>
+      function displayCurrentDate() {
+        const currentDate = new Date()
+        const day = currentDate.getDate()
+        const year = currentDate.getFullYear()
+      
+        const dateString = `${day}${getDaySuffix(day)}`
+      
+        const dateContainer = document.getElementById('date-container')
+        dateContainer.textContent = dateString
+      }
+      
+      function displayCurrentMonth() {
+        const currentDate = new Date()
+        const month = currentDate.toLocaleString('default', { month: 'long' })
+      
+        const monthContainer = document.getElementById('month-container')
+        monthContainer.textContent = month
+      }
+      
+      function getDaySuffix(day) {
+        const suffixes = ['th', 'st', 'nd', 'rd']
+        const value = day % 100
+        return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]
+      }
+      
+      displayCurrentDate()
+      displayCurrentMonth()
+    </script>
+
+    {% comment %}TIME SCRIPT{% endcomment %}
+    <script>
+      function displayCurrentTime() {
+        const currentTime = new Date()
+        const hours = currentTime.getHours()
+        const minutes = currentTime.getMinutes()
+      
+        const formattedTime = `${formatTime(hours)}:${formatTime(minutes)}`
+      
+        const timeContainer = document.getElementById('time-container')
+        timeContainer.textContent = formattedTime
+      }
+      
+      function formatTime(time) {
+        return time < 10 ? `0${time}` : time
+      }
+      
+      displayCurrentTime()
+      setInterval(displayCurrentTime, 1000) // Update time every second
+    </script>
+  </body>
+</html>

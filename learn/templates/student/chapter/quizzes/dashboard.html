@@ -1,0 +1,70 @@
+{% extends 'student/base_student.html' %}
+
+{% load static %}
+
+{% block title %}
+  {{ quiz.title }} | {{ chapter.name }}
+{% endblock %}
+
+{% block content %}
+  <section class="w-[90%] h-[90vh] my-auto mx-auto quiz-overview">
+    <div class="w-[100%] h-[100%] grid grid-cols-1 sm:grid-cols-2">
+      <div class="col-span-1 flex flex-col items-center justify-center">
+        <h5 class="text-left text-[4rem] text-gray-600 w-[100%]">{{ quiz.title }}</h5>
+        <h6 class="text-left text-[1.5rem] text-gray-400 w-[100%]">{{ chapter.name }}</h6>
+      </div>
+      <div class="col-span-1 flex items-center justify-center">
+        <div class="w-[100%]">
+          <p class="text-[1rem] w-[90%] mx-auto text-center mb-3 text-gray-500">
+            {% if quiz_submitted == True %}
+              These are the results from your last attempt
+            {% else %}
+              This is all you need to know abot the quiz, let's get started!
+            {% endif %}
+          </p>
+          <div>
+            <div class="relative">
+              <div class="absolute inset-0 h-1/2"></div>
+              <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto">
+                  <dl class="rounded-lg sm:grid sm:grid-cols-3">
+                    <div class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Questions</dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ quiz.questions.count }}</dd>
+                    </div>
+                    <div class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
+                        {% if quiz_submitted == True %}
+                          Percent
+                        {% else %}
+                          Mark/ Question
+                        {% endif %}
+                      </dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">
+                        {% if quiz_submitted == True %}
+                          {{ percentage }}
+                        {% else %}
+                          1
+                        {% endif %}
+                      </dd>
+                    </div>
+                    <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
+                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">Incorrect</dt>
+                      <dd class="order-1 text-5xl font-extrabold text-gray-500">{{ percentage }}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2">
+        <div class="w-[100%] text-center">
+          <a href="{% url 'chapter_quiz_content' student.student_slug subject.subject_slug topic.topic_slug chapter.chapter_slug quiz.quiz_slug %}" class="text-center">Start</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

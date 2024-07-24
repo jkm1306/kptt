@@ -1,0 +1,121 @@
+{% extends 'base_learn.html' %}
+
+{% load static %}
+
+{% block content %}
+  <section class="lg:pt-20 pt-0 lg:pl-8 h-full learn-hero">
+    <div class="rounded-2xl py-10 overflow-hidden m-5 lg:m-0 2xl:py-16 xl:py-8 lg:rounded-tl-2xl lg:rounded-bl-2xl">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-14 items-center lg:grid-cols-12 lg:gap32">
+          <div class="w-full xl:col-span-5 lg:col-span-6 2xl:-mx-5 xl:-mx-0">
+            <div class="flex items-center text-sm font-medium text-gray-500 justify-center lg:justify-start">
+              <span class="bg-sky-600 py-1 px-3 rounded-[5px] text-xs font-medium text-white mr-3">Location? The Future!</span>
+            </div>
+            <h3 class="py-8 text-center text-[#3b3b3b] font-bold text-7xl lg:text-left leading-[70px]">The New Way To <span class="bg-gradient-to-r from-cyan-400 to-sky-700 bg-clip-text text-transparent">Learn</span></h3>
+            {% if user.is_authenticated %}
+              <p class="text-gray-500 text-lg text-center lg:text-left">
+                Embracing the Future of Learning.
+                <br />
+                Go to the Future Now!
+              </p>
+            {% else %}
+              <p class="text-gray-500 text-lg text-center lg:text-left">
+                Embracing the Future of Learning.
+                <br />
+                Don't be left in the past, let's go to the future!
+              </p>
+            {% endif %}
+            <div class="relative p-1.5 my-10 flex items-center gap-y-4 h-auto md:h-16 flex-col md:flex-row gap-x-6 rounded-full">
+              {% if user.is_authenticated %}
+                <a href="#" class="bg-sky-600 text-white px-6 py-3 rounded-xl hover:bg-sky-700 duration-200 font-medium">Go To Dashboard</a>
+                <a href="#" class="hover:text-sky-600 duration-200 font-medium text-gray-700">Learn more</a>
+              {% else %}
+                <a href="#" class="bg-sky-600 text-white px-6 py-3 rounded-xl hover:bg-sky-700 duration-200 font-medium">Get Started</a>
+                <a href="#" class="hover:text-sky-600 duration-200 font-medium text-gray-700">Learn more</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="w-full xl:col-span-7 lg:col-span-6 block">
+            <div class="w-full sm:w-auto lg:w-[60.8125rem] xl:ml-16">
+              <img src="https://pagedone.io/asset/uploads/1694846193.png" alt="Dashboard image" class="w-full lg:h-auto" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="w-[90%] mx-auto bg-gradient-to-tr from-cyan-600 to-sky-900 pt-[4rem] pb-[6rem] rounded-xl learn-features">
+    <h5 class="text-5xl text-bold w-[80%] mx-auto text-center mb-[4rem] text-white">Why Choose Us?</h5>
+    <div class="grid md:grid-cols-3 max-w-screen-lg mx-auto gap-10 mt-16 px-5">
+      <div class="flex gap-4 items-start flex-col">
+        <span class="p-3 rounded-full">
+          <svg fill="#fff" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#fff" width="25" height="25">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <title>tick-checkbox</title> <path d="M0 26.016v-20q0-2.496 1.76-4.256t4.256-1.76h20q2.464 0 4.224 1.76t1.76 4.256v20q0 2.496-1.76 4.224t-4.224 1.76h-20q-2.496 0-4.256-1.76t-1.76-4.224zM4 26.016q0 0.832 0.576 1.408t1.44 0.576h20q0.8 0 1.408-0.576t0.576-1.408v-20q0-0.832-0.576-1.408t-1.408-0.608h-20q-0.832 0-1.44 0.608t-0.576 1.408v20zM7.584 16q0-0.832 0.608-1.408t1.408-0.576 1.408 0.576l2.848 2.816 7.072-7.040q0.576-0.608 1.408-0.608t1.408 0.608 0.608 1.408-0.608 1.408l-8.48 8.48q-0.576 0.608-1.408 0.608t-1.408-0.608l-4.256-4.256q-0.608-0.576-0.608-1.408z"></path>
+            </g>
+          </svg>
+        </span>
+        <div>
+          <h6 class="font-semibold text-xl text-white">Topical Exams</h6>
+          <p class="mt-1 text-[#d8d8d8]">We have topic based exams to help you focus on that one particular topic you need to impove on</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 items-start flex-col">
+        <span class="p-3 rounded-full">
+          <svg width="25" height="25" fill="#fff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80.13 80.13" xml:space="preserve" stroke="#fff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g>
+                <path d="M48.355,17.922c3.705,2.323,6.303,6.254,6.776,10.817c1.511,0.706,3.188,1.112,4.966,1.112 c6.491,0,11.752-5.261,11.752-11.751c0-6.491-5.261-11.752-11.752-11.752C53.668,6.35,48.453,11.517,48.355,17.922z M40.656,41.984 c6.491,0,11.752-5.262,11.752-11.752s-5.262-11.751-11.752-11.751c-6.49,0-11.754,5.262-11.754,11.752S34.166,41.984,40.656,41.984 z M45.641,42.785h-9.972c-8.297,0-15.047,6.751-15.047,15.048v12.195l0.031,0.191l0.84,0.263 c7.918,2.474,14.797,3.299,20.459,3.299c11.059,0,17.469-3.153,17.864-3.354l0.785-0.397h0.084V57.833 C60.688,49.536,53.938,42.785,45.641,42.785z M65.084,30.653h-9.895c-0.107,3.959-1.797,7.524-4.47,10.088 c7.375,2.193,12.771,9.032,12.771,17.11v3.758c9.77-0.358,15.4-3.127,15.771-3.313l0.785-0.398h0.084V45.699 C80.13,37.403,73.38,30.653,65.084,30.653z M20.035,29.853c2.299,0,4.438-0.671,6.25-1.814c0.576-3.757,2.59-7.04,5.467-9.276 c0.012-0.22,0.033-0.438,0.033-0.66c0-6.491-5.262-11.752-11.75-11.752c-6.492,0-11.752,5.261-11.752,11.752 C8.283,24.591,13.543,29.853,20.035,29.853z M30.589,40.741c-2.66-2.551-4.344-6.097-4.467-10.032 c-0.367-0.027-0.73-0.056-1.104-0.056h-9.971C6.75,30.653,0,37.403,0,45.699v12.197l0.031,0.188l0.84,0.265 c6.352,1.983,12.021,2.897,16.945,3.185v-3.683C17.818,49.773,23.212,42.936,30.589,40.741z"></path>
+              </g>
+            </g>
+          </svg>
+        </span>
+        <div>
+          <h6 class="font-semibold text-xl text-white">Multiple Students</h6>
+          <p class="mt-1 text-[#d8d8d8]">You can add more than one student to your user account granting access to more than one child</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 items-start flex-col">
+        <span class="p-3 rounded-full">
+          <svg fill="#fff" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#fff" width="25" height="25">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g fill-rule="evenodd">
+                <path d="M0 53h1386.67v342.083c-50.87-14.385-104.54-22.083-160-22.083C902.66 373 640 635.66 640 959.667c0 324.003 262.66 586.663 586.67 586.663 55.46 0 109.13-7.69 160-22.08v342.08H0V53Z" fill-rule="nonzero"></path> <path d="M1226.67 1439.67c113.33 0 217.48-39.28 299.6-104.96l302.37 302.65c20.82 20.84 54.59 20.85 75.42.04 20.84-20.82 20.86-54.59.04-75.43l-302.41-302.68c65.7-82.12 104.98-186.29 104.98-299.623 0-265.097-214.91-480-480-480-265.1 0-480.003 214.903-480.003 480 0 265.093 214.903 480.003 480.003 480.003Zm0-106.67c206.18 0 373.33-167.15 373.33-373.333 0-206.187-167.15-373.334-373.33-373.334-206.19 0-373.337 167.147-373.337 373.334 0 206.183 167.147 373.333 373.337 373.333Z"></path>
+              </g>
+            </g>
+          </svg>
+        </span>
+        <div>
+          <h6 class="font-semibold text-xl text-white">Progress Review</h6>
+          <p class="mt-1 text-[#d8d8d8]">Review your progress at any time, allowing you to track your child's performance and keep them motivated</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-offer">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div class="font-light text-gray-500 sm:text-lg">
+        <h4 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-700">What We Offer</h4>
+        <p class="mb-4">We keep in mind your child's needs and interests as we design our materials. We offer services like topic based tests to allow your child to revise the specific topics that they need to polish up on before their exam. We have a team always creating new contents to keep your child engaged and motivated.</p>
+
+        <a href="#" class="text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none">Learn more</a>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mt-8">
+        <img class="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1" />
+        <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2" />
+      </div>
+    </div>
+  </section>
+
+  <br /><br /><br />
+{% endblock %}
