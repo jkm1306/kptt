@@ -21,6 +21,13 @@
     font-family: 'Clash Grotesk', sans-serif;
 }
 
+.quiz-overview .start-link a {
+    font-family: 'Clash Grotesk', sans-serif;
+}
+
+.quiz-overview-comments {
+    font-family: 'Manrope', sans-serif;
+}
 
 /* CHAPTER RESULTS */
 .results-page-hero .comment {

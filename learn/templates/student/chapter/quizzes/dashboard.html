@@ -7,91 +7,79 @@
 {% endblock %}
 
 {% block content %}
-  <section class="w-[90%] h-[90vh] my-auto mx-auto quiz-overview">
-    <div class="w-[100%] h-[100%] grid grid-cols-1 sm:grid-cols-2">
-      <div class="col-span-1 flex flex-col items-center justify-center">
-        <h5 class="text-left text-[4rem] text-gray-600 w-[100%]">{{ quiz.title }}</h5>
-        <h6 class="text-left text-[1.5rem] text-gray-400 w-[100%]">{{ chapter.name }}</h6>
-      </div>
-      <div class="col-span-1 flex items-center justify-center">
-        <div class="w-[100%]">
-          <p class="text-[1rem] w-[90%] mx-auto text-center mb-3 text-gray-500">
-            {% if quiz_submitted == True %}
-              This is what you need to know about the quiz from your last attempt
-            {% else %}
-              This is all you need to know abot the quiz, let's get started!
-            {% endif %}
-          </p>
-          <div>
-            <div class="relative statistics">
-              <div class="inset-0 h-1/2"></div>
-              <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-4xl mx-auto">
-                  <dl class="rounded-lg sm:grid sm:grid-cols-3">
-                    <div class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
-                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
-                        {% if quiz_submitted == True %}
-                          Percent
-                        {% else %}
-                          Mark PQ
-                        {% endif %}
-                      </dt>
-                      <dd class="order-1 text-5xl font-extrabold text-gray-500">
-                        {% if quiz_submitted == True %}
-                          {{ percentage }}
-                        {% else %}
-                          1
-                        {% endif %}
-                      </dd>
-                    </div>
-                    <div class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
-                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
-                        {% if quiz_submitted == True %}
-                          {% if questions.count <= 1 %}
-                          Question
-                          {% else %}
-                          Questions
-                          {% endif %}
-                        {% else %}
-                          Mark PQ
-                        {% endif %}
-                      </dt>
-                      <dd class="order-1 text-5xl font-extrabold text-gray-500">
-                        {% if quiz_submitted == True %}
-                          {{ questions.count }}
-                        {% else %}
-                          1
-                        {% endif %}
-                      </dd>
-                    </div>
-                    <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
-                      <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
-                        {% if quiz_submitted == True %}
-                          Minutes
-                        {% else %}
-                          Mark PQ
-                        {% endif %}
-                      </dt>
-                      <dd class="order-1 text-5xl font-extrabold text-gray-500">
-                        {% if quiz_submitted == True %}
-                          {{ time_min }}
-                        {% else %}
-                          1
-                        {% endif %}
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="py-5 sm:py-10 mt-[5rem] quiz-overview">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:max-w-none">
+        <div class="text-center space-y-4">
+          <h5 class="text-[3rem] font-bold tracking-tight text-gray-600 sm:text-[4rem]">{{ quiz.title }}</h5>
+          <h6 class="text-lg leading-8 text-gray-500">{{ chapter.name }}</h6>
         </div>
-      </div>
-      <div class="col-span-2">
-        <div class="w-[100%] text-center">
-          <a href="{% url 'chapter_quiz_content' student.student_slug subject.subject_slug topic.topic_slug chapter.chapter_slug quiz.quiz_slug %}" class="text-center">Start</a>
+        <dl class="mt-12 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-3">
+          <div class="flex flex-col bg-white/5 p-8 statistics">
+            <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
+              {% if quiz_submitted == True %}
+                Percent
+              {% else %}
+                Mark PQ
+              {% endif %}
+            </dt>
+            <dd class="order-1 text-5xl font-extrabold text-gray-500">
+              {% if quiz_submitted == True %}
+                {{ percentage }}
+              {% else %}
+                1
+              {% endif %}
+            </dd>
+          </div>
+          <div class="flex flex-col bg-white/5 p-8">
+            <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
+              {% if quiz_submitted == True %}
+                {% if questions.count <= 1 %}
+                  Question
+                {% else %}
+                  Questions
+                {% endif %}
+              {% else %}
+                Mark PQ
+              {% endif %}
+            </dt>
+            <dd class="order-1 text-5xl font-extrabold text-gray-500">
+              {% if quiz_submitted == True %}
+                {{ questions.count }}
+              {% else %}
+                1
+              {% endif %}
+            </dd>
+          </div>
+          <div class="flex flex-col bg-white/5 p-8">
+            <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-400">
+              {% if quiz_submitted == True %}
+                Minutes
+              {% else %}
+                Mark PQ
+              {% endif %}
+            </dt>
+            <dd class="order-1 text-5xl font-extrabold text-gray-500">
+              {% if quiz_submitted == True %}
+                {{ time_min }}
+              {% else %}
+                1
+              {% endif %}
+            </dd>
+          </div>
+        </dl>
+        <div class="w-[100%] text-center start-link">
+          <a href="{% url 'chapter_quiz_content' student.student_slug subject.subject_slug topic.topic_slug chapter.chapter_slug quiz.quiz_slug %}" class="text-center px-6 py-1 border-[2px] border-[{{ student.color }}] rounded-lg bg-[{{ student.color }}] text-white font-medium hover:bg-white hover:text-gray-700 duration-500">Start</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <p class="text-[1.1rem] w-[90%] mx-auto text-center mt-1 text-gray-500 quiz-overview-comments">
+    {% if quiz_submitted == True %}
+      This is what you need to know about the quiz from your last attempt
+    {% else %}
+      This is all you need to know abot the quiz, let's get started!
+    {% endif %}
+  </p>
 {% endblock %}
