@@ -180,6 +180,14 @@ def topic_dashboard(request, student_slug, subject_slug, topic_slug):
         student=student, chapter__in=chapters, completed=True
     ).values_list("chapter__id", flat=True)
 
+    completed_chapter_ids = StudentChapterCompletion.objects.filter(
+        student=student, chapter__topic=topic, completed=True
+    ).values_list("chapter__id", flat=True)
+
+    chapter_completion = {
+        chapter.id: chapter.id in completed_chapter_ids for chapter in chapters
+    }
+
     number_of_completed_chapters = completed_chapters.count()
 
     if number_of_chapters > 0:
@@ -199,7 +207,9 @@ def topic_dashboard(request, student_slug, subject_slug, topic_slug):
         "number_of_chapters": number_of_chapters,
         "number_of_completed_chapters": number_of_completed_chapters,
         "completion_percentage": completion_percentage,
+        "chapter_completion": chapter_completion,
     }
+
     return render(request, "student/topic/dashboard.html", context)
 
 
@@ -513,26 +523,23 @@ def chapter_quiz_results(
         else:
             incorrect_choices += 1
             incorrect_questions.append(question)
-    
-    number_unanswered_questions = len(questions) - len(responses)
 
+    number_unanswered_questions = len(questions) - len(responses)
 
     unanswered_questions = []
     answered_question_ids = [response.question.id for response in responses]
     for question in questions.exclude(id__in=answered_question_ids):
-        choices = list(question.choices.values('id', 'choice_text', 'is_correct', 'explanation'))
-        unanswered_questions.append({
-            'question_text': question.question_text,
-            'choices': choices
-        })
-
-
+        choices = list(
+            question.choices.values("id", "choice_text", "is_correct", "explanation")
+        )
+        unanswered_questions.append(
+            {"question_text": question.question_text, "choices": choices}
+        )
 
     if len(questions) == 0:
         percentage = 0
     else:
         percentage = round((correct_choices / len(questions)) * 100)
-
 
     number_correct = len(correct_questions)
     number_incorrect = len(incorrect_questions)

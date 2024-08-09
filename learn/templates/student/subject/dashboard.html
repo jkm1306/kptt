@@ -8,7 +8,7 @@
       <div class="md:w-2/3 mb-10 md:mb-0">
         <ol class="flex items-center whitespace-nowrap mb-[2rem] breadcrumb-nav">
           <li class="inline-flex items-center">
-            <a class="flex items-center text-sm text-gray-500 hover:text-[{{ student.color }}] focus:outline-none focus:text-blue-600" href="{% url "student_dashboard" student.student_slug %}">Home</a>
+            <a class="flex items-center text-sm text-gray-500 hover:text-[{{ student.color }}] focus:outline-none focus:text-blue-600" href="{% url 'student_dashboard' student.student_slug %}">Home</a>
             <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m9 18 6-6-6-6"></path>
             </svg>
@@ -89,4 +89,6 @@
       </a>
     {% endfor %}
   </div>
+
+  
 {% endblock %}

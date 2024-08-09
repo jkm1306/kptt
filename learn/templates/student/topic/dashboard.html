@@ -1,5 +1,6 @@
 {% extends 'student/base_student.html' %}
 
+{% load custom_filters %}
 {% load static %}
 
 {% block title %}
@@ -74,14 +75,49 @@
   </section>
 
   <br /><br /><br /><br />
-  <div class="grid grid-cols-2 gap-4">
-    <div class="col-span-1 bg-gray-200">
-      {% for chapter in chapter_order %}
-        <a href="{% url 'chapter_dashboard' student.student_slug subject_slug topic.topic_slug chapter.chapter_slug %}">{{ chapter.name }}</a>
-        <br />
-      {% endfor %}
-    </div>
-
-    
+  <div class="grid grid-cols-3 gap-4">
+    {% for chapter in chapter_order %}
+      <a href="{% url 'chapter_dashboard' student.student_slug subject_slug topic.topic_slug chapter.chapter_slug %}" class="border-2">
+        <div class="grid sm:grid-cols-3 sm:grid-rows-1 grid-cols-1 grid-rows-2 gap-5 h-[100%]">
+          <div class="sm:col-span-2 col-span-1 bg-green-300">
+            <div class="flex justify-left items-center h-[100%] px-5">
+              <div class="h-[100%] w-[100%]">
+                <h6 class="sm:mt-8 mt-4">{{ chapter.name }}</h6>
+                <p>sdasdadas</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1">
+            <div class="flex justify-center items-center h-[100%]">
+              {% if chapter_completion|get_item:chapter.id %}
+                <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="w-8 h-8">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path fill="#0da039" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"></path>
+                  </g>
+                </svg>
+              {% else %}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" fill="#a3a3a3"></path>
+                  </g>
+                </svg>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
   </div>
+
+  <br /><br /><br /><br />
+  {% for data in chapter_data %}
+    <div>
+      <h3>{{ data.chapter.name }}</h3>
+      <p>Number of quizzes: {{ data.num_quizzes }}</p>
+    </div>
+  {% endfor %}
 {% endblock %}
